@@ -153,40 +153,41 @@ public class PlaywrightFactory {
         String formattedDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Properties.getProp().dateTimePattern()));
         String logName = String.format("%s_%s", formattedDateTime, "formula");
         String tracePathStr = tracePath + logName + ".zip";
+        String screenPathStr = screenPath + logName + ".zip";
         Path zipFilePath = getPath(tracePathStr);
+        Path screenFilePath = getPath(screenPathStr);
 
         getTlContext().tracing().stop(new Tracing.StopOptions()
                 .setPath(zipFilePath));
 
+
+        byte[] screenshot = getTlPage().screenshot(new Page.ScreenshotOptions()
+                .setPath(screenFilePath).setFullPage(true));
         getTlContext().close();
 
-
-
+        Allure.addAttachment("SCREENSHOT_" + logName,
+                new ByteArrayInputStream(screenshot));
     }
 
     public void playwrightStop() throws IOException {
-        getTlBrowser().close();
-        getTlPlaywright().close();
-
         String formattedDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Properties.getProp().dateTimePattern()));
         String videoName = getTlPage().video().path().getFileName().toString();
         String logName = String.format("%s_%s", formattedDateTime, "formula");
         String tracePathStr = tracePath + logName + ".zip";
-        String screenPathStr = screenPath + logName;
 
         Path zipFilePath = getPath(tracePathStr);
-        Path screenFilePath = getPath(screenPathStr);
+
         Path networkFilePath = getPath(networkPath + randomChar + ".har");
         Path videoFilePath = getPath(videoPath + videoName);
 
+
+        getTlBrowser().close();
+        getTlPlaywright().close();
         byte[] videoContents = Files.readAllBytes(videoFilePath);
         byte[] zipContents = Files.readAllBytes(zipFilePath);
         byte[] networkContents = Files.readAllBytes(networkFilePath);
-        byte[] screenshot = getTlPage().screenshot(new Page.ScreenshotOptions()
-                .setPath(screenFilePath).setFullPage(true));
 
-        Allure.addAttachment("SCREENSHOT_" + logName,
-                new ByteArrayInputStream(screenshot));
+
 
         Allure.addAttachment("TRACE_" + logName,
                 new ByteArrayInputStream(zipContents));

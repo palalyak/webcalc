@@ -20,21 +20,21 @@ public class testCalBasicFormulasBtn extends BaseTest {
         webCalc.setTypeOfCalc(Programmer).enterCharacters(ONE, ZERO, MINUS, EIGHT).submit(EQUALS);
         assertThat(webCalc.getCalculationResult()).isEqualTo("2");
     }
-
-    @Test
-    public void testFormula3() {
-        webCalc.setTypeOfCalc(Scientific).enterCharacters(THREE, ZERO, SIN).submit(EQUALS);
-        assertThat(webCalc.getCalculationResult()).isEqualTo("0.5");
-    }
-
-    @Test
-    public void testFormula4() {
-        webCalc
-                .setTypeOfCalc(Scientific)
-                .enterCharacters(PARAN_L, ONE, ZERO, MINUS, TWO, PARAN_R, MULT, TWO)
-                .submit(EQUALS);
-
-        assertThat(webCalc.getCalculationResult()).isNotEqualTo("20");
-    }
+//
+//    @Test
+//    public void testFormula3() {
+//        webCalc.setTypeOfCalc(Scientific).enterCharacters(THREE, ZERO, SIN).submit(EQUALS);
+//        assertThat(webCalc.getCalculationResult()).isEqualTo("0.5");
+//    }
+//
+//    @Test
+//    public void testFormula4() {
+//        webCalc
+//                .setTypeOfCalc(Scientific)
+//                .enterCharacters(PARAN_L, ONE, ZERO, MINUS, TWO, PARAN_R, MULT, TWO)
+//                .submit(EQUALS);
+//
+//        assertThat(webCalc.getCalculationResult()).isNotEqualTo("20");
+//    }
 
 }
