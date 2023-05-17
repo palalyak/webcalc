@@ -3,6 +3,7 @@ package com.webcalc.ui.tests;
 import com.webcalc.ui.core.utils.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import static com.webcalc.ui.core.keyoptions.BtnCalc.*;
 import static com.webcalc.ui.core.keyoptions.CalcTypes.Programmer;
@@ -11,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Epic("Web calculator UI")
 @Feature("Basic math operations")
+@Listeners(com.lista.automation.api.TestListener.class)
 public class testCalBasicFormulasBtn extends BaseTest {
 
     @Test
