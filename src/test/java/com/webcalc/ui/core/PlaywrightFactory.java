@@ -149,9 +149,8 @@ public class PlaywrightFactory {
         return getTlPage();
     }
 
-    public void contextStop() {
-        String formattedDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Properties.getProp().dateTimePattern()));
-        String logName = String.format("%s_%s", formattedDateTime, "formula");
+    public void contextStop(Method testInfo) {
+        String logName = getLogName(testInfo);
         String tracePathStr = tracePath + logName + ".zip";
         String screenPathStr = screenPath + logName + ".zip";
         Path zipFilePath = getPath(tracePathStr);
@@ -169,12 +168,15 @@ public class PlaywrightFactory {
                 new ByteArrayInputStream(screenshot));
     }
 
-    public void playwrightStop() throws IOException {
+    private String getLogName(Method testInfo) {
         String formattedDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Properties.getProp().dateTimePattern()));
-        String videoName = getTlPage().video().path().getFileName().toString();
-        String logName = String.format("%s_%s", formattedDateTime, "formula");
-        String tracePathStr = tracePath + logName + ".zip";
+        return String.format("%s_%s", formattedDateTime, testInfo.getName());
+    }
 
+    public void playwrightStop(Method testInfo) throws IOException {
+        String videoName = getTlPage().video().path().getFileName().toString();
+        String logName = getLogName(testInfo);
+        String tracePathStr = tracePath + logName + ".zip";
         Path zipFilePath = getPath(tracePathStr);
 
         Path networkFilePath = getPath(networkPath + randomChar + ".har");
@@ -199,6 +201,7 @@ public class PlaywrightFactory {
                 new ByteArrayInputStream(videoContents));
 
     }
+
 
     private Path getPath(String customPath) {
         return Paths.get(customPath);

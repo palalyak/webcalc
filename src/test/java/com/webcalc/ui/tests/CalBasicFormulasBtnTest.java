@@ -8,11 +8,12 @@ import org.testng.annotations.Test;
 
 import static com.webcalc.ui.core.keyoptions.BtnCalc.*;
 import static com.webcalc.ui.core.keyoptions.CalcTypes.Programmer;
+import static com.webcalc.ui.core.keyoptions.CalcTypes.Scientific;
 import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Epic("Web calculator UI")
-@Feature("Basic math operations")
+@Epic("Web calculator UI / Basic math operations")
+@Feature("Click calc buttons")
 @Listeners(com.lista.automation.api.TestListener.class)
 public class CalBasicFormulasBtnTest extends BaseTest {
 
@@ -37,21 +38,21 @@ public class CalBasicFormulasBtnTest extends BaseTest {
             });
         });
     }
-//
-//    @Test
-//    public void testFormula3() {
-//        webCalc.setTypeOfCalc(Scientific).enterCharacters(THREE, ZERO, SIN).submit(EQUALS);
-//        assertThat(webCalc.getCalculationResult()).isEqualTo("0.5");
-//    }
-//
-//    @Test
-//    public void testFormula4() {
-//        webCalc
-//                .setTypeOfCalc(Scientific)
-//                .enterCharacters(PARAN_L, ONE, ZERO, MINUS, TWO, PARAN_R, MULT, TWO)
-//                .submit(EQUALS);
-//
-//        assertThat(webCalc.getCalculationResult()).isNotEqualTo("20");
-//    }
+
+    @Test
+    public void testFormula3() {
+        webCalc.setTypeOfCalc(Scientific).enterCharacters(THREE, ZERO, SIN).submit(EQUALS);
+        assertThat(webCalc.getCalculationResult()).isEqualTo("0.5");
+    }
+
+    @Test
+    public void testFormula4() {
+        webCalc
+                .setTypeOfCalc(Scientific)
+                .enterCharacters(PARAN_L, ONE, ZERO, MINUS, TWO, PARAN_R, MULT, TWO)
+                .submit(EQUALS);
+
+        assertThat(webCalc.getCalculationResult()).isNotEqualTo("20");
+    }
 
 }
