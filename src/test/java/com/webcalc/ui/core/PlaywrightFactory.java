@@ -26,6 +26,7 @@ public class PlaywrightFactory {
     private static ThreadLocal<BrowserContext> tlContext = new ThreadLocal<>();
     private static ThreadLocal<Page> tlPage = new ThreadLocal<>();
 
+
     public static Playwright getTlPlaywright() {
         return tlPlaywright.get();
     }
@@ -145,12 +146,11 @@ public class PlaywrightFactory {
     public Page startPage() {
         tlPage.set(getTlContext().newPage());
         getTlPage().navigate(Properties.getProp().baseURL());
-
         return getTlPage();
     }
 
-    public void contextStop(String testInfo) {
-        String logName = getLogName(testInfo);
+    public void contextStop() {
+        String logName = getLogName();
         String tracePathStr = tracePath + logName + ".zip";
         String screenPathStr = screenPath + logName + ".zip";
         Path zipFilePath = getPath(tracePathStr);
@@ -168,14 +168,14 @@ public class PlaywrightFactory {
                 new ByteArrayInputStream(screenshot));
     }
 
-    private String getLogName(String testInfo) {
+    private String getLogName() {
         String formattedDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Properties.getProp().dateTimePattern()));
-        return String.format("%s_%s", formattedDateTime, testInfo);
+        return String.format("%s_%s", formattedDateTime, "");
     }
 
-    public void playwrightStop(String testInfo) throws IOException {
+    public void playwrightStop() throws IOException {
         String videoName = getTlPage().video().path().getFileName().toString();
-        String logName = getLogName(testInfo);
+        String logName = getLogName();
         String tracePathStr = tracePath + logName + ".zip";
         Path zipFilePath = getPath(tracePathStr);
 
