@@ -47,7 +47,7 @@ public class WebCalc extends BasePage {
                     clickBy(helperMenu, 0, false);
                 });
                 step("change calculator type", () -> {
-                    clickBy("#inputhelpermenu a[class='"+ calcTypes.getValue() +"']", 0, false);
+                    clickBy("#inputhelpermenu a[class='" + calcTypes.getValue() + "']", 0, false);
 
                     assertThat(getInnerTextBy(titleType)).as("type was changed")
                             .isEqualTo(calcTypes.getValue().toLowerCase());
@@ -67,13 +67,15 @@ public class WebCalc extends BasePage {
         assertThat(!isVisible(popup)).as("popup is closed").isTrue();
     }
 
+    @Step("submit result by click on =")
     public WebCalc submit(BtnCalc btnCalc) {
         clickBy(btnCalc.getValue(), 0, false);
-        clickBy("#hist",0,false);
+        clickBy("#hist", 0, false);
         waitForTimeout(2000);
         return this;
     }
 
+    @Step("submit result by press key - Enter")
     public WebCalc submit() {
         page.keyboard().press("Enter");
         waitForTimeout(2000);
@@ -83,7 +85,9 @@ public class WebCalc extends BasePage {
     @Step("pull result from input line")
     public String getCalculationResult() {
         String result = extractJSValue("#input");
-        getLocator("#input").clear();
+        step("clean calc input", () -> {
+            getLocator("#input").clear();
+        });
         return result;
     }
 

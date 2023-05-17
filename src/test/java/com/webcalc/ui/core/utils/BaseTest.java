@@ -62,8 +62,9 @@ public class BaseTest {
 
     @AfterClass
     public void closeBrowser(Method testInfo) throws IOException {
-        pf.contextStop(testInfo);
-        pf.playwrightStop(testInfo);
+        String testName = testInfo.getName();
+        pf.contextStop(testName);
+        pf.playwrightStop(testName);
     }
 
 

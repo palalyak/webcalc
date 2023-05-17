@@ -149,7 +149,7 @@ public class PlaywrightFactory {
         return getTlPage();
     }
 
-    public void contextStop(Method testInfo) {
+    public void contextStop(String testInfo) {
         String logName = getLogName(testInfo);
         String tracePathStr = tracePath + logName + ".zip";
         String screenPathStr = screenPath + logName + ".zip";
@@ -168,12 +168,12 @@ public class PlaywrightFactory {
                 new ByteArrayInputStream(screenshot));
     }
 
-    private String getLogName(Method testInfo) {
+    private String getLogName(String testInfo) {
         String formattedDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Properties.getProp().dateTimePattern()));
-        return String.format("%s_%s", formattedDateTime, testInfo.getName());
+        return String.format("%s_%s", formattedDateTime, testInfo);
     }
 
-    public void playwrightStop(Method testInfo) throws IOException {
+    public void playwrightStop(String testInfo) throws IOException {
         String videoName = getTlPage().video().path().getFileName().toString();
         String logName = getLogName(testInfo);
         String tracePathStr = tracePath + logName + ".zip";
@@ -188,8 +188,6 @@ public class PlaywrightFactory {
         byte[] videoContents = Files.readAllBytes(videoFilePath);
         byte[] zipContents = Files.readAllBytes(zipFilePath);
         byte[] networkContents = Files.readAllBytes(networkFilePath);
-
-
 
         Allure.addAttachment("TRACE_" + logName,
                 new ByteArrayInputStream(zipContents));

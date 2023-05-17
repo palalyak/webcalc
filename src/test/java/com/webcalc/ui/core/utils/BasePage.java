@@ -6,6 +6,8 @@ import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
 import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
+
 import java.io.ByteArrayInputStream;
 import java.nio.file.Paths;
 import java.util.concurrent.ThreadLocalRandom;
@@ -47,6 +49,7 @@ public class BasePage {
         }
     }
 
+    @Step("extract JS value")
     public String extractJSValue(String selector) {
         attachAllureLog("extract JS value: ", selector,"");
         return page.evaluate("() => document.querySelector('"+selector+"').value").toString();
