@@ -1,0 +1,29 @@
+[
+  {
+    "formula": "2+3",
+    "result": "5"
+  },
+  {
+    "formula": "10-2",
+    "result": "8"
+  },
+  {
+    "formula": "sin(30)",
+    "result": "0.5"
+  },
+
+  {
+    "formula_negative": "(10 - 2) * 2",
+    "result": "20"
+  },
+  {
+    "formula_negative": "10/0",
+    "result": "0"
+  },
+
+  {
+    "formula_negative": "12379541236478954123*1",
+    "result_negative": "12379541236478954124"
+  }
+
+]
