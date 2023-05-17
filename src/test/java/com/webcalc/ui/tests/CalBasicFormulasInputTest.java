@@ -1,24 +1,16 @@
 package com.webcalc.ui.tests;
 
 import com.webcalc.ui.core.utils.BaseTest;
-import com.webcalc.ui.pages.WebCalc;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 
-import static com.webcalc.ui.core.keyoptions.BtnCalc.*;
-import static com.webcalc.ui.core.keyoptions.CalcTypes.Programmer;
-import static com.webcalc.ui.core.keyoptions.CalcTypes.Scientific;
-import static com.webcalc.ui.core.utils.Data.getJsonData;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class testCalBasicFormulasInput extends BaseTest {
+public class CalBasicFormulasInputTest extends BaseTest {
 
 //    @Test(dataProvider = "getData")
-//    public void testEnteringKeyboardNumbers(HashMap<String, String>input) {
+//    public void testEnteringKeyboardNumbers(HashMap<String, String> input) {
 //        webCalc.enterCharacters(input.get("formula")).submit();
 //        assertThat(webCalc.getCalculationResult()).isEqualTo(input.get("result"));
 //    }
