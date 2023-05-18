@@ -7,6 +7,8 @@ import io.qameta.allure.Feature;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.io.UnsupportedEncodingException;
+
 import static com.webcalc.ui.core.keyoptions.BtnCalc.*;
 import static com.webcalc.ui.core.keyoptions.CalcTypes.Programmer;
 import static com.webcalc.ui.core.keyoptions.CalcTypes.Scientific;
@@ -34,7 +36,8 @@ public class CalBasicFormulasBtnTest extends BaseTest {
                     assertThat(webCalc.getCalculationResult()).isEqualTo(expectedResult);
                 });
                 step("UI: assert history", () -> {
-                    assertThat(webCalc.getHistory()).containsEntry(formula, expectedResult);
+                    assertThat(webCalc.getHistoryOfResults()).containsEntry(formula, expectedResult);
+                    assertThat(webCalc.getHistoryEntries()).as("formulas do not repeat").isEmpty();
                 });
             });
         });
@@ -56,7 +59,8 @@ public class CalBasicFormulasBtnTest extends BaseTest {
                     assertThat(webCalc.getCalculationResult()).isEqualTo(expectedResult);
                 });
                 step("UI: assert history", () -> {
-                    assertThat(webCalc.getHistory()).containsEntry(formula, expectedResult);
+                    assertThat(webCalc.getHistoryOfResults()).containsEntry(formula, expectedResult);
+                    assertThat(webCalc.getHistoryEntries()).as("formulas do not repeat").isEmpty();
                 });
             });
         });
@@ -78,7 +82,8 @@ public class CalBasicFormulasBtnTest extends BaseTest {
                     assertThat(webCalc.getCalculationResult()).isEqualTo(expectedResult);
                 });
                 step("UI: assert history", () -> {
-                    assertThat(webCalc.getHistory()).containsEntry(formula, expectedResult);
+                    assertThat(webCalc.getHistoryOfResults()).containsEntry(formula, expectedResult);
+                    assertThat(webCalc.getHistoryEntries()).as("formulas do not repeat").isEmpty();
                 });
             });
         });
@@ -103,7 +108,8 @@ public class CalBasicFormulasBtnTest extends BaseTest {
                     assertThat(webCalc.getCalculationResult()).isNotEqualTo("20");
                 });
                 step("UI: assert history", () -> {
-                    assertThat(webCalc.getHistory()).containsEntry(formula, expectedResult);
+                    assertThat(webCalc.getHistoryOfResults()).containsEntry(formula, expectedResult);
+                    assertThat(webCalc.getHistoryEntries()).as("formulas do not repeat").isEmpty();
                 });
             });
         });

@@ -1,13 +1,11 @@
 package com.webcalc.ui.pages;
 
-import com.microsoft.playwright.Locator;
 import com.webcalc.ui.core.keyoptions.BtnCalc;
 import com.webcalc.ui.core.utils.BasePage;
 import com.webcalc.ui.core.keyoptions.CalcTypes;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -79,7 +77,7 @@ public class WebCalc extends BasePage {
     @Step("submit result by click on =")
     public WebCalc submit(BtnCalc btnCalc) {
         clickBy(btnCalc.getValue(), 0, false);
-        getHistory();
+        getHistoryOfResults();
         waitForTimeout(2000);
         return this;
     }
@@ -91,16 +89,28 @@ public class WebCalc extends BasePage {
         return this;
     }
 
-    @Step("extract formula and result from history window")
-    public Map<String, String> getHistory() {
+    @Step("collect formulas and result from history window")
+    public Map<String, String> getHistoryOfResults() {
+        clickBy("#hist",0,false);
         return getLocator(historyLinesEl).all().stream()
                 .collect(Collectors.toMap(
                         liElement -> liElement.locator("p.l").innerText(),
                         liElement -> liElement.locator("p.r").innerText()
-                                .replaceAll("[\\s=\\u00A0]", "")
+                                .replaceAll("[\\s=\\u00A0]", ""),
+                        (value1, value2) -> value2
                 ));
     }
 
+    @Step("collect formulas from history window")
+    public List<String> getHistoryEntries() {
+        List<String> keys = getLocator(historyLinesEl).all().stream()
+                .map(liElement -> liElement.locator("p.l").innerText())
+                .collect(Collectors.toList());
+
+        return keys.stream()
+                .filter(key -> keys.indexOf(key) != keys.lastIndexOf(key))
+                .collect(Collectors.toList());
+    }
     @Step("pull result from input line")
     public String getCalculationResult() {
         return extractJSValue("#input");
