@@ -1,0 +1,1 @@
+selector/text: #inputhelpermenu a[class='programmer']|

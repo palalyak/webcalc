@@ -1,0 +1,4 @@
+"Epic","Feature","Story","FAILED","BROKEN","PASSED","SKIPPED","UNKNOWN"
+"Web calculator UI / Basic math operations","Click calc buttons","","0","0","4","0","0"
+"Web calculator UI / Performance","send api requests","","0","0","1","0","0"
+"Web calculator UI / Negative / Positive","Enter characters","","0","0","4","0","0"
