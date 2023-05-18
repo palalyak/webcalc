@@ -13,7 +13,7 @@ import static org.testng.AssertJUnit.assertEquals;
 public class PerformanceTest {
 
     @Test
-    public void performanceTest() throws InterruptedException {
+    public void testPerformOperetion() throws InterruptedException {
         int threadNumber = 100;
         List<Thread> threads = new ArrayList<>();
         for (int i = 0; i < threadNumber; i++) {
