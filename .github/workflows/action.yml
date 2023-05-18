@@ -15,7 +15,8 @@ jobs:
 
     strategy:
       matrix:
-        max-parallel: 4
+        ci_index: [ 0, 1, 2, 3 ]
+        ci_total: [ 4 ]
 
     steps:
       - uses: actions/checkout@v3
@@ -29,6 +30,9 @@ jobs:
         run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
       - name: Run tests
         run: mvn test
+        env:
+          CI_TOTAL: ${{ matrix.ci_total }}
+          CI_INDEX: ${{ matrix.ci_index }}
 
       - name: Get Allure history
         uses: actions/checkout@v2
