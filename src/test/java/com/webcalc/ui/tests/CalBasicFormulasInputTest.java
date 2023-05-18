@@ -16,6 +16,8 @@ import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
+@Epic("Verify calculator input")
+@Feature("Click calc buttons")
 @Listeners(com.lista.automation.api.TestListener.class)
 public class CalBasicFormulasInputTest extends BaseTest {
 

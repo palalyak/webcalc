@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static org.testng.AssertJUnit.assertEquals;
 
-@Epic("Web calculator UI / Performance")
+@Epic("Performance")
 @Feature("send api requests")
 public class PerformanceTest {
 

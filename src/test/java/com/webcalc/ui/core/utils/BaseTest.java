@@ -66,7 +66,7 @@ public class BaseTest {
     }
 
     @AfterClass
-    public void closeBrowser() throws IOException {
+    public void closeBrowser() throws IOException, InterruptedException {
         pf.contextStop();
         pf.playwrightStop();
     }

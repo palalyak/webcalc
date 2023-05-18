@@ -149,12 +149,17 @@ public class PlaywrightFactory {
         return getTlPage();
     }
 
-    public void contextStop() {
+    public void contextStop() throws IOException, InterruptedException {
+        Thread.sleep(10000);
+        String videoName = getTlPage().video().path().getFileName().toString();
         String logName = getLogName();
         String tracePathStr = tracePath + logName + ".zip";
         String screenPathStr = screenPath + logName + ".png";
         Path zipFilePath = getPath(tracePathStr);
         Path screenFilePath = getPath(screenPathStr);
+
+        Path networkFilePath = getPath(networkPath + randomChar + ".har");
+        Path videoFilePath = getPath(videoPath + videoName);
 
         getTlContext().tracing().stop(new Tracing.StopOptions()
                 .setPath(zipFilePath));
@@ -166,25 +171,7 @@ public class PlaywrightFactory {
 
         Allure.addAttachment("SCREENSHOT_" + logName,
                 new ByteArrayInputStream(screenshot));
-    }
 
-    private String getLogName() {
-        String formattedDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Properties.getProp().dateTimePattern()));
-        return String.format("%s_%s", formattedDateTime, "");
-    }
-
-    public void playwrightStop() throws IOException {
-        String videoName = getTlPage().video().path().getFileName().toString();
-        String logName = getLogName();
-        String tracePathStr = tracePath + logName + ".zip";
-        Path zipFilePath = getPath(tracePathStr);
-
-        Path networkFilePath = getPath(networkPath + randomChar + ".har");
-        Path videoFilePath = getPath(videoPath + videoName);
-
-
-        getTlBrowser().close();
-        getTlPlaywright().close();
         byte[] videoContents = Files.readAllBytes(videoFilePath);
         byte[] zipContents = Files.readAllBytes(zipFilePath);
         byte[] networkContents = Files.readAllBytes(networkFilePath);
@@ -197,6 +184,17 @@ public class PlaywrightFactory {
 
         Allure.addAttachment("VIDEO_" + logName,
                 new ByteArrayInputStream(videoContents));
+    }
+
+    private String getLogName() {
+        String formattedDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Properties.getProp().dateTimePattern()));
+        return String.format("%s_%s", formattedDateTime, "");
+    }
+
+    public void playwrightStop() {
+        getTlBrowser().close();
+        getTlPlaywright().close();
+
 
     }
 
