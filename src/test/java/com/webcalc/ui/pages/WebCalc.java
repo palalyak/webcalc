@@ -53,10 +53,7 @@ public class WebCalc extends BasePage {
                     clickBy(helperMenu, 0, false);
                 });
                 step("change calculator type", () -> {
-                    clickBy("#inputhelpermenu a[class='" + calcTypes.getValue() + "']", 0, false);
-
-                    assertThat(getInnerTextBy(titleType)).as("type was changed")
-                            .isEqualTo(calcTypes.getValue().toLowerCase());
+                    clickBy(hasText("#inputhelpermenu a", calcTypes.getValue()), 0, false);
                 });
             }
         });

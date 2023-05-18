@@ -1,17 +1,20 @@
 package com.webcalc.ui.tests;
 
+import com.webcalc.ui.core.keyoptions.CalcTypes;
 import com.webcalc.ui.core.utils.BaseTest;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.webcalc.ui.core.keyoptions.BtnCalc.*;
-import static com.webcalc.ui.core.keyoptions.CalcTypes.Programmer;
-import static com.webcalc.ui.core.keyoptions.CalcTypes.Scientific;
+import static com.webcalc.ui.core.keyoptions.CalcTypes.*;
 import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,7 +30,7 @@ public class CalBasicFormulasBtnTest extends BaseTest {
         String expectedResult = "5";
 
         step("UI operation: 2 + 3 = 5", () -> {
-            webCalc.setTypeOfCalc(Programmer).enterCharacters(TWO, PLUS, THREE).submit(EQUALS);
+            webCalc.setTypeOfCalc(Scientific).enterCharacters(TWO, PLUS, THREE).submit(EQUALS);
 
             step("API: assert result", () -> {
                 assertThat(api.calcService().calc("2+3")).isEqualTo(expectedResult);
@@ -50,7 +53,7 @@ public class CalBasicFormulasBtnTest extends BaseTest {
         String expectedResult = "2";
 
         step("UI operation: 10 - 8 = 2", () -> {
-            webCalc.setTypeOfCalc(Programmer).enterCharacters(ONE, ZERO, MINUS, EIGHT).submit(EQUALS);
+            webCalc.setTypeOfCalc(Scientific).enterCharacters(ONE, ZERO, MINUS, EIGHT).submit(EQUALS);
 
             step("API: assert result", () -> {
                 assertThat(api.calcService().calc("10-8")).isEqualTo(expectedResult);
@@ -115,4 +118,25 @@ public class CalBasicFormulasBtnTest extends BaseTest {
         });
     }
 
+    @Test(dataProvider = "getData")
+    @Description("calc types")
+    public void testCalculatorTypes(CalcTypes calcType) {
+        webCalc.setTypeOfCalc(calcType);
+
+        assertThat(webCalc.getInnerTextBy("#inputhelper .title"))
+                .as("type was changed")
+                .isEqualTo(calcType.getValue().toLowerCase());
+    }
+
+
+
+
+
+
+    @DataProvider
+    public Object[][] getData() {
+        return Arrays.stream(CalcTypes.values())
+                .map(type -> new Object[] {type})
+                .toArray(Object[][]::new);
+    }
 }
