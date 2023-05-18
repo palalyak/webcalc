@@ -3,6 +3,8 @@ package com.webcalc.ui.core.utils;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Playwright;
+import com.webcalc.api.core.RestService;
+import com.webcalc.api.core.RestWrapper;
 import com.webcalc.ui.core.PlaywrightFactory;
 import com.webcalc.ui.pages.WebCalc;
 import com.microsoft.playwright.Page;
@@ -21,7 +23,7 @@ public class BaseTest {
     private Browser browser;
     protected WebCalc webCalc;
 
-//    protected RestWrapper api;
+    protected RestWrapper api;
 
 
 //    @BeforeTest
@@ -47,6 +49,7 @@ public class BaseTest {
 
     @BeforeClass
     public void launchBrowser() {
+        api = RestWrapper.request();
         pf = new PlaywrightFactory();
         playwright = pf.playCreate();
         browser = pf.startBrowser();

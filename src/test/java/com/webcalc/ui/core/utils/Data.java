@@ -13,7 +13,6 @@ import java.util.List;
 public class Data {
 
     public static List<HashMap<String, String>> getJsonData(String jsonPath) throws IOException {
-        //"//src//main//java//Utils//eCommerceData.json"
         String jsonContent  =
                 FileUtils.readFileToString(new File
                         (System.getProperty("user.dir") + jsonPath), StandardCharsets.UTF_8);

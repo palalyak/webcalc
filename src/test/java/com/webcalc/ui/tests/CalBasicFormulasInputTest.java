@@ -16,7 +16,7 @@ import static com.webcalc.ui.core.utils.Data.getJsonData;
 import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Epic("Web calculator UI / Basic math operations")
+@Epic("Web calculator UI / Negative / Positive")
 @Feature("Enter characters")
 @Listeners(com.lista.automation.api.TestListener.class)
 public class CalBasicFormulasInputTest extends BaseTest {
