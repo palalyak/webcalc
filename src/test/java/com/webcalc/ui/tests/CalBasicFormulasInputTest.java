@@ -1,7 +1,6 @@
 package com.webcalc.ui.tests;
 
 import com.webcalc.ui.core.utils.BaseTest;
-import com.webcalc.ui.pages.WebCalc;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import org.testng.annotations.DataProvider;
@@ -12,7 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.webcalc.ui.core.utils.Data.getJsonData;
+import static com.webcalc.ui.core.utils.JsonMapper.getJsonData;
 import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 

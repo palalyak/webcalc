@@ -1,10 +1,16 @@
 package com.webcalc.ui.pages;
 
+import com.microsoft.playwright.Locator;
 import com.webcalc.ui.core.keyoptions.BtnCalc;
 import com.webcalc.ui.core.utils.BasePage;
 import com.webcalc.ui.core.keyoptions.CalcTypes;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static io.qameta.allure.Allure.step;
@@ -13,9 +19,11 @@ public class WebCalc extends BasePage {
 
     private Page page;
     private String helperMenu = "#inputhelper";
-    private String currentActiveCalcType = "#inputhelpermenu li[class=active]";
-    private String popup = ".modal-content button[value='consent']";
+    private String openHistoryWindow = "#hist.open";
+    private String historyLinesEl = "#histframe > ul > li";
     private String titleType = "#inputhelper .title";
+    private String popup = ".modal-content button[value='consent']";
+    private String currentActiveCalcType = "#inputhelpermenu li[class=active]";
 
     public WebCalc(Page page) {
         super(page);
@@ -58,19 +66,20 @@ public class WebCalc extends BasePage {
     }
 
     @Step("close popup")
-    public void closePopup() {
+    public WebCalc closePopup() {
         waitForTimeout(2000);
         if (isVisible(popup)) {
             clickBy(popup, 0, true);
             waitForTimeout(3000);
         }
         assertThat(!isVisible(popup)).as("popup is closed").isTrue();
+        return this;
     }
 
     @Step("submit result by click on =")
     public WebCalc submit(BtnCalc btnCalc) {
         clickBy(btnCalc.getValue(), 0, false);
-        clickBy("#hist", 0, false);
+        getHistory();
         waitForTimeout(2000);
         return this;
     }
@@ -82,13 +91,19 @@ public class WebCalc extends BasePage {
         return this;
     }
 
+    @Step("extract formula and result from history window")
+    public Map<String, String> getHistory() {
+        return getLocator(historyLinesEl).all().stream()
+                .collect(Collectors.toMap(
+                        liElement -> liElement.locator("p.l").innerText(),
+                        liElement -> liElement.locator("p.r").innerText()
+                                .replaceAll("[\\s=\\u00A0]", "")
+                ));
+    }
+
     @Step("pull result from input line")
     public String getCalculationResult() {
-        String result = extractJSValue("#input");
-        step("clean calc input", () -> {
-            getLocator("#input").clear();
-        });
-        return result;
+        return extractJSValue("#input");
     }
 
 

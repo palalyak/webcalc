@@ -152,13 +152,12 @@ public class PlaywrightFactory {
     public void contextStop() {
         String logName = getLogName();
         String tracePathStr = tracePath + logName + ".zip";
-        String screenPathStr = screenPath + logName + ".zip";
+        String screenPathStr = screenPath + logName + ".png";
         Path zipFilePath = getPath(tracePathStr);
         Path screenFilePath = getPath(screenPathStr);
 
         getTlContext().tracing().stop(new Tracing.StopOptions()
                 .setPath(zipFilePath));
-
 
         byte[] screenshot = getTlPage().screenshot(new Page.ScreenshotOptions()
                 .setPath(screenFilePath).setFullPage(true));
