@@ -28,7 +28,7 @@ public class PerformanceTest {
         }
 
         System.out.println(RestAssuredThread.times);
-        toLineChartPict("Endpoint performance", "Time Of Responses", RestAssuredThread.times);
+//        toLineChartPict("Endpoint performance", "Time Of Responses", RestAssuredThread.times);
 
         assertEquals(String.format("There is %s unsuccessful responses",RestAssuredThread.failures), 0, RestAssuredThread.failures);
     }
