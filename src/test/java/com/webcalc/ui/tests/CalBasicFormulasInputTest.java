@@ -15,8 +15,7 @@ import static com.webcalc.ui.core.utils.JsonMapper.getJsonData;
 import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Epic("Web calculator UI / Negative / Positive")
-@Feature("Enter characters")
+
 @Listeners(com.lista.automation.api.TestListener.class)
 public class CalBasicFormulasInputTest extends BaseTest {
 
@@ -45,12 +44,20 @@ public class CalBasicFormulasInputTest extends BaseTest {
     @DataProvider
     public Object[][] getData() throws IOException {
         List<HashMap<String, String>> data = getJsonData("//src//test//java//com//webcalc//ui//core//utils//calcData.json");
-        return new Object[][]{{data.get(0)}, {data.get(1)}};
+        Object[][] testData = new Object[data.size()][1];
+        for (int i = 0; i < data.size(); i++) {
+            testData[i][0] = data.get(i);
+        }
+        return testData;
     }
 
     @DataProvider
     public Object[][] getDataNegative() throws IOException {
         List<HashMap<String, String>> data = getJsonData("//src//test//java//com//webcalc//ui//core//utils//calcDataNegative.json");
-        return new Object[][]{{data.get(0)}, {data.get(1)}};
+        Object[][] testData = new Object[data.size()][1];
+        for (int i = 0; i < data.size(); i++) {
+            testData[i][0] = data.get(i);
+        }
+        return testData;
     }
 }

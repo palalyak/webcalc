@@ -5,7 +5,6 @@ import io.qameta.allure.Feature;
 import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
-import static com.webcalc.performance.ChartCreator.toLineChartPict;
 import static org.testng.AssertJUnit.assertEquals;
 
 @Epic("Web calculator UI / Performance")
@@ -13,7 +12,7 @@ import static org.testng.AssertJUnit.assertEquals;
 public class PerformanceTest {
 
     @Test
-    public void testPerformOperetion() throws InterruptedException {
+    public void testPerformOperation() throws InterruptedException {
         int threadNumber = 100;
         List<Thread> threads = new ArrayList<>();
         for (int i = 0; i < threadNumber; i++) {
@@ -28,8 +27,6 @@ public class PerformanceTest {
         }
 
         System.out.println(RestAssuredThread.times);
-//        toLineChartPict("Endpoint performance", "Time Of Responses", RestAssuredThread.times);
-
         assertEquals(String.format("There is %s unsuccessful responses",RestAssuredThread.failures), 0, RestAssuredThread.failures);
     }
 }

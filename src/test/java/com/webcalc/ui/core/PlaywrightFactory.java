@@ -162,6 +162,7 @@ public class PlaywrightFactory {
         byte[] screenshot = getTlPage().screenshot(new Page.ScreenshotOptions()
                 .setPath(screenFilePath).setFullPage(true));
         getTlContext().close();
+        System.out.println("context closed");
 
         Allure.addAttachment("SCREENSHOT_" + logName,
                 new ByteArrayInputStream(screenshot));

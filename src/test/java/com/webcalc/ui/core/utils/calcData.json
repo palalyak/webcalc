@@ -1,29 +1,47 @@
 [
   {
-    "formula": "2+3",
-    "result": "5"
+    "formula": "(2+2i)*(3+3i)",
+    "result": "12i"
   },
   {
-    "formula": "10-2",
-    "result": "8"
+    "formula": "int(x^2)",
+    "result": "(x^3/3)"
   },
   {
-    "formula": "sin(30)",
-    "result": "0.5"
-  },
-
-  {
-    "formula_negative": "(10 - 2) * 2",
-    "result": "20"
+    "formula": "diff(x^2)",
+    "result": "2*x"
   },
   {
-    "formula_negative": "10/0",
-    "result": "0"
+    "formula": "x^2+2x-1=9",
+    "result": "{x=-sqrt(11)-1, x=sqrt(11)-1}"
   },
-
   {
-    "formula_negative": "12379541236478954123*1",
-    "result_negative": "12379541236478954124"
+    "formula": "sum(x,x=1..10)",
+    "result": "55"
+  },
+  {
+    "formula": "(1, 2, 3)#(4, 5, 6)",
+    "result": "(-3, 6, -3)"
+  },
+  {
+    "formula": "100+5%",
+    "result": "105"
+  },
+  {
+    "formula": "sqrt(9)",
+    "result": "3"
+  },
+  {
+    "formula": "ncr(49, 6)",
+    "result": "13983816"
+  },
+  {
+    "formula": "sin(90)",
+    "result": "1"
+  },
+  {
+    "formula": "200m in cm",
+    "result": "20000[cm]"
   }
 
 ]

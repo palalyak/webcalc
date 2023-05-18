@@ -8,6 +8,8 @@ import com.webcalc.api.core.RestWrapper;
 import com.webcalc.ui.core.PlaywrightFactory;
 import com.webcalc.ui.pages.WebCalc;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.restassured.AllureRestAssured;
+import io.restassured.RestAssured;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
@@ -26,10 +28,10 @@ public class BaseTest {
     protected RestWrapper api;
 
 
-//    @BeforeTest
-//    public void setFilter() {
-//        RestAssured.filters(new AllureRestAssured());
-//    }
+    @BeforeTest
+    public void setFilter() {
+        RestAssured.filters(new AllureRestAssured());
+    }
 
 //    @BeforeSuite
 //    public void setUp() {
