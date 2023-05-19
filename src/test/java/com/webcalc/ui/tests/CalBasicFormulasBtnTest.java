@@ -9,9 +9,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
-import java.util.List;
 
 import static com.webcalc.ui.core.keyoptions.BtnCalc.*;
 import static com.webcalc.ui.core.keyoptions.CalcTypes.*;
@@ -30,17 +28,17 @@ public class CalBasicFormulasBtnTest extends BaseTest {
         String expectedResult = "5";
 
         step("UI operation: 2 + 3 = 5", () -> {
-            webCalc.setTypeOfCalc(Scientific).enterCharacters(TWO, PLUS, THREE).submit(EQUALS);
+            webCalcPage.setTypeOfCalc(Scientific).enterCharacters(TWO, PLUS, THREE).submit(EQUALS);
 
             step("API: assert result", () -> {
                 assertThat(api.calcService().calc("2+3")).isEqualTo(expectedResult);
 
                 step("UI: assert result", () -> {
-                    assertThat(webCalc.getCalculationResult()).isEqualTo(expectedResult);
+                    assertThat(webCalcPage.getCalculationResult()).isEqualTo(expectedResult);
                 });
                 step("UI: assert history", () -> {
-                    assertThat(webCalc.getHistoryOfResults()).containsEntry(formula, expectedResult);
-                    assertThat(webCalc.getHistoryEntries()).as("formulas do not repeat").isEmpty();
+                    assertThat(webCalcPage.getHistoryOfResults()).containsEntry(formula, expectedResult);
+                    assertThat(webCalcPage.getHistoryEntries()).as("formulas do not repeat").isEmpty();
                 });
             });
         });
@@ -53,17 +51,17 @@ public class CalBasicFormulasBtnTest extends BaseTest {
         String expectedResult = "2";
 
         step("UI operation: 10 - 8 = 2", () -> {
-            webCalc.setTypeOfCalc(Scientific).enterCharacters(ONE, ZERO, MINUS, EIGHT).submit(EQUALS);
+            webCalcPage.setTypeOfCalc(Scientific).enterCharacters(ONE, ZERO, MINUS, EIGHT).submit(EQUALS);
 
             step("API: assert result", () -> {
                 assertThat(api.calcService().calc("10-8")).isEqualTo(expectedResult);
 
                 step("UI: assert result", () -> {
-                    assertThat(webCalc.getCalculationResult()).isEqualTo(expectedResult);
+                    assertThat(webCalcPage.getCalculationResult()).isEqualTo(expectedResult);
                 });
                 step("UI: assert history", () -> {
-                    assertThat(webCalc.getHistoryOfResults()).containsEntry(formula, expectedResult);
-                    assertThat(webCalc.getHistoryEntries()).as("formulas do not repeat").isEmpty();
+                    assertThat(webCalcPage.getHistoryOfResults()).containsEntry(formula, expectedResult);
+                    assertThat(webCalcPage.getHistoryEntries()).as("formulas do not repeat").isEmpty();
                 });
             });
         });
@@ -76,17 +74,17 @@ public class CalBasicFormulasBtnTest extends BaseTest {
         String expectedResult = "0.5";
 
         step("UI operation: sin(30) = 0.5", () -> {
-            webCalc.setTypeOfCalc(Scientific).enterCharacters(THREE, ZERO, SIN).submit(EQUALS);
+            webCalcPage.setTypeOfCalc(Scientific).enterCharacters(THREE, ZERO, SIN).submit(EQUALS);
 
             step("API: assert", () -> {
                 assertThat(api.calcService().calc("sin(30)")).isEqualTo(expectedResult);
 
                 step("UI: assert result", () -> {
-                    assertThat(webCalc.getCalculationResult()).isEqualTo(expectedResult);
+                    assertThat(webCalcPage.getCalculationResult()).isEqualTo(expectedResult);
                 });
                 step("UI: assert history", () -> {
-                    assertThat(webCalc.getHistoryOfResults()).containsEntry(formula, expectedResult);
-                    assertThat(webCalc.getHistoryEntries()).as("formulas do not repeat").isEmpty();
+                    assertThat(webCalcPage.getHistoryOfResults()).containsEntry(formula, expectedResult);
+                    assertThat(webCalcPage.getHistoryEntries()).as("formulas do not repeat").isEmpty();
                 });
             });
         });
@@ -99,7 +97,7 @@ public class CalBasicFormulasBtnTest extends BaseTest {
         String expectedResult = "16";
 
         step("UI operation: (10 - 2) * 2 != 20", () -> {
-            webCalc
+            webCalcPage
                     .setTypeOfCalc(Scientific)
                     .enterCharacters(PARAN_L, ONE, ZERO, MINUS, TWO, PARAN_R, MULT, TWO)
                     .submit(EQUALS);
@@ -108,11 +106,11 @@ public class CalBasicFormulasBtnTest extends BaseTest {
                 assertThat(api.calcService().calc("(10-2)*2")).isEqualTo(expectedResult);
 
                 step("UI: assert result", () -> {
-                    assertThat(webCalc.getCalculationResult()).isNotEqualTo("20");
+                    assertThat(webCalcPage.getCalculationResult()).isNotEqualTo("20");
                 });
                 step("UI: assert history", () -> {
-                    assertThat(webCalc.getHistoryOfResults()).containsEntry(formula, expectedResult);
-                    assertThat(webCalc.getHistoryEntries()).as("formulas do not repeat").isEmpty();
+                    assertThat(webCalcPage.getHistoryOfResults()).containsEntry(formula, expectedResult);
+                    assertThat(webCalcPage.getHistoryEntries()).as("formulas do not repeat").isEmpty();
                 });
             });
         });
@@ -121,9 +119,9 @@ public class CalBasicFormulasBtnTest extends BaseTest {
     @Test(dataProvider = "getData")
     @Description("calc types")
     public void testCalculatorTypes(CalcTypes calcType) {
-        webCalc.setTypeOfCalc(calcType);
+        webCalcPage.setTypeOfCalc(calcType);
 
-        assertThat(webCalc.getInnerTextBy("#inputhelper .title"))
+        assertThat(webCalcPage.getInnerTextBy("#inputhelper .title"))
                 .as("type was changed")
                 .isEqualTo(calcType.getValue().toLowerCase());
     }

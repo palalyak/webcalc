@@ -5,31 +5,30 @@ import com.webcalc.ui.core.utils.BasePage;
 import com.webcalc.ui.core.keyoptions.CalcTypes;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
-
+import lombok.extern.log4j.Log4j2;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static io.qameta.allure.Allure.step;
 
-public class WebCalc extends BasePage {
+
+public class WebCalcPage extends BasePage {
 
     private Page page;
     private String helperMenu = "#inputhelper";
-    private String openHistoryWindow = "#hist.open";
     private String historyLinesEl = "#histframe > ul > li";
-    private String titleType = "#inputhelper .title";
     private String popup = ".modal-content button[value='consent']";
     private String currentActiveCalcType = "#inputhelpermenu li[class=active]";
 
-    public WebCalc(Page page) {
+
+    public WebCalcPage(Page page) {
         super(page);
         this.page = page;
     }
 
     @Step("Enter characters")
-    public WebCalc enterCharacters(BtnCalc... btnCalc) {
+    public WebCalcPage enterCharacters(BtnCalc... btnCalc) {
         for (BtnCalc button : btnCalc) {
             clickBy(button.getValue(), 0, false);
         }
@@ -37,14 +36,14 @@ public class WebCalc extends BasePage {
     }
 
     @Step("Click on characters")
-    public WebCalc enterCharacters(String formula) {
+    public WebCalcPage enterCharacters(String formula) {
         typeIn("#input", formula);
         waitForTimeout(2000);
         return this;
     }
 
     @Step("Set calculator type")
-    public WebCalc setTypeOfCalc(CalcTypes calcTypes) {
+    public WebCalcPage setTypeOfCalc(CalcTypes calcTypes) {
         step("get current active calculator type", () -> {
             String currentType = getInnerTextBy(currentActiveCalcType);
 
@@ -61,7 +60,7 @@ public class WebCalc extends BasePage {
     }
 
     @Step("close popup")
-    public WebCalc closePopup() {
+    public WebCalcPage closePopup() {
         waitForTimeout(2000);
         if (isVisible(popup)) {
             clickBy(popup, 0, true);
@@ -72,7 +71,7 @@ public class WebCalc extends BasePage {
     }
 
     @Step("submit result by click on =")
-    public WebCalc submit(BtnCalc btnCalc) {
+    public WebCalcPage submit(BtnCalc btnCalc) {
         clickBy(btnCalc.getValue(), 0, false);
         getHistoryOfResults();
         waitForTimeout(2000);
@@ -80,7 +79,7 @@ public class WebCalc extends BasePage {
     }
 
     @Step("submit result by press key - Enter")
-    public WebCalc submit() {
+    public WebCalcPage submit() {
         page.keyboard().press("Enter");
         waitForTimeout(2000);
         return this;

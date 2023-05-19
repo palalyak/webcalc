@@ -24,10 +24,10 @@ public class CalBasicFormulasInputTest extends BaseTest {
     @Test(dataProvider = "getData")
     public void testEnteringKeyboardCharacters(HashMap<String, String> input) {
         step("Enter keyboard characters", () -> {
-            webCalc.enterCharacters(input.get("formula")).submit();
+            webCalcPage.enterCharacters(input.get("formula")).submit();
 
             step("UI: assert", () -> {
-                assertThat(webCalc.getCalculationResult()).isEqualTo(input.get("result"));
+                assertThat(webCalcPage.getCalculationResult()).isEqualTo(input.get("result"));
             });
         });
     }
@@ -35,10 +35,10 @@ public class CalBasicFormulasInputTest extends BaseTest {
     @Test(dataProvider = "getDataNegative")
     public void testEnteringKeyboardNumbersNegative(HashMap<String, String> input) {
         step("Enter keyboard characters", () -> {
-            webCalc.enterCharacters(input.get("formula")).submit();
+            webCalcPage.enterCharacters(input.get("formula")).submit();
 
             step("UI: assert", () -> {
-                assertThat(webCalc.getCalculationResult()).isNotEqualTo(input.get("result"));
+                assertThat(webCalcPage.getCalculationResult()).isNotEqualTo(input.get("result"));
             });
         });
     }

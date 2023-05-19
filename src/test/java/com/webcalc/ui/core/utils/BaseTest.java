@@ -5,7 +5,7 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Playwright;
 import com.webcalc.api.core.RestWrapper;
 import com.webcalc.ui.core.PlaywrightFactory;
-import com.webcalc.ui.pages.WebCalc;
+import com.webcalc.ui.pages.WebCalcPage;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
@@ -24,7 +24,7 @@ public class BaseTest {
     private Playwright playwright;
     private BrowserContext context;
     private Browser browser;
-    protected WebCalc webCalc;
+    protected WebCalcPage webCalcPage;
 
     protected RestWrapper api;
 
@@ -51,8 +51,8 @@ public class BaseTest {
     @BeforeMethod
     public void createContextAndPage() {
         page = pf.startPage();
-        webCalc = new WebCalc(page);
-        webCalc.closePopup();
+        webCalcPage = new WebCalcPage(page);
+        webCalcPage.closePopup();
     }
 
     @AfterClass

@@ -1,5 +1,6 @@
 package com.webcalc.ui.tests;
 import com.webcalc.performance.RestAssuredThread;
+import com.webcalc.ui.core.utils.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import org.testng.annotations.Test;
@@ -9,7 +10,7 @@ import static org.testng.AssertJUnit.assertEquals;
 
 @Epic("Performance")
 @Feature("send api requests")
-public class PerformanceTest {
+public class PerformanceTest extends BaseTest {
 
     @Test
     public void testPerformOperation() throws InterruptedException {
