@@ -149,10 +149,10 @@ public class PlaywrightFactory {
         return getTlPage();
     }
 
-    public void contextStop() throws IOException, InterruptedException {
+    public void contextStop(Method testInfo, ITestResult iTestResult) throws IOException, InterruptedException {
         Thread.sleep(10000);
         String videoName = getTlPage().video().path().getFileName().toString();
-        String logName = getLogName();
+        String logName = getLogName(testInfo);
         String tracePathStr = tracePath + logName + ".zip";
         String screenPathStr = screenPath + logName + ".png";
         Path zipFilePath = getPath(tracePathStr);
@@ -169,26 +169,29 @@ public class PlaywrightFactory {
         getTlContext().close();
         System.out.println("context closed");
 
-        Allure.addAttachment("SCREENSHOT_" + logName,
-                new ByteArrayInputStream(screenshot));
 
         byte[] videoContents = Files.readAllBytes(videoFilePath);
         byte[] zipContents = Files.readAllBytes(zipFilePath);
         byte[] networkContents = Files.readAllBytes(networkFilePath);
 
-        Allure.addAttachment("TRACE_" + logName,
-                new ByteArrayInputStream(zipContents));
+        if (iTestResult.getStatus() == 2) {
+            Allure.addAttachment("SCREENSHOT_" + logName,
+                    new ByteArrayInputStream(screenshot));
 
-        Allure.addAttachment("NETWORK_" + logName,
-                new ByteArrayInputStream(networkContents));
+            Allure.addAttachment("TRACE_" + logName,
+                    new ByteArrayInputStream(zipContents));
 
-        Allure.addAttachment("VIDEO_" + logName,
-                new ByteArrayInputStream(videoContents));
+            Allure.addAttachment("NETWORK_" + logName,
+                    new ByteArrayInputStream(networkContents));
+
+            Allure.addAttachment("VIDEO_" + logName,
+                    new ByteArrayInputStream(videoContents));
+        }
     }
 
-    private String getLogName() {
+    private String getLogName(Method testInfo) {
         String formattedDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Properties.getProp().dateTimePattern()));
-        return String.format("%s_%s", formattedDateTime, "");
+        return String.format("%s_%s", formattedDateTime, testInfo.getName());
     }
 
     public void playwrightStop() {
