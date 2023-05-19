@@ -30,11 +30,9 @@ public class PlaywrightFactory {
     public static Playwright getTlPlaywright() {
         return tlPlaywright.get();
     }
-
     public static Browser getTlBrowser() {
         return tlBrowser.get();
     }
-
     public static BrowserContext getTlContext() {
         return tlContext.get();
     }
@@ -43,78 +41,7 @@ public class PlaywrightFactory {
         return tlPage.get();
     }
 
-    public Page initBrowser() {
-        tlPlaywright.set(Playwright.create());
-
-        tlBrowser.set(getTlPlaywright().chromium().launch(new BrowserType.LaunchOptions()
-                .setSlowMo(Properties.getProp().sloMotion())
-                .setHeadless(Properties.getProp().mode())));
-
-        tlContext.set(getTlBrowser().newContext(new Browser.NewContextOptions()
-                .setLocale(Properties.getProp().local())
-                .setRecordHarPath(Paths.get(networkPath + randomChar + ".har"))
-                .setRecordVideoDir(Paths.get(videoPath))
-                .setViewportSize(Properties.getProp().viewportWidth(), Properties.getProp().viewportHeight())
-                .setTimezoneId(Properties.getProp().timeZone())
-                .setGeolocation(Properties.getProp().latitude(), Properties.getProp().longitude())
-                .setPermissions(Collections.singletonList("notifications"))));
-
-        getTlContext().tracing().start(new Tracing.StartOptions()
-                .setScreenshots(true)
-                .setSnapshots(true)
-                .setSources(true));
-
-
-        tlPage.set(getTlContext().newPage());
-        getTlPage().onConsoleMessage(msg -> System.out.println(msg.text()));
-        getTlPage().navigate(Properties.getProp().baseURL());
-
-        return getTlPage();
-    }
-
-    public void stop(Method testInfo, ITestResult result) throws IOException {
-
-        String formattedDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Properties.getProp().dateTimePattern()));
-        String videoName = getTlPage().video().path().getFileName().toString();
-
-        String logName = String.format("%s_%s", formattedDateTime, testInfo.getName());
-        String screenPathStr = screenPath + logName + ".zip";
-        String tracePathStr = tracePath + logName + ".zip";
-
-        Path zipFilePath = getPath(tracePathStr);
-        Path screenFilePath = getPath(screenPathStr);
-        Path networkFilePath = getPath(networkPath + randomChar + ".har");
-        Path videoFilePath = getPath(videoPath + videoName);
-
-        getTlContext().tracing().stop(new Tracing.StopOptions()
-                .setPath(zipFilePath));
-
-//        byte[] screenshot = getTlPage().screenshot(new Page.ScreenshotOptions()
-//                .setPath(screenFilePath).setFullPage(true));
-
-        getTlContext().close();
-        getTlBrowser().close();
-
-//        byte[] videoContents = Files.readAllBytes(videoFilePath);
-        byte[] zipContents = Files.readAllBytes(zipFilePath);
-//        byte[] networkContents = Files.readAllBytes(networkFilePath);
-//
-        if (result.getStatus() == 2) {
-//            Allure.addAttachment("SCREENSHOT_" + logName,
-//                    new ByteArrayInputStream(screenshot));
-
-            Allure.addAttachment("TRACE_" + logName,
-                    new ByteArrayInputStream(zipContents));
-
-//            Allure.addAttachment("NETWORK_" + logName,
-//                    new ByteArrayInputStream(networkContents));
-
-//            Allure.addAttachment("VIDEO_" + logName,
-//                    new ByteArrayInputStream(videoContents));
-        }
-    }
-
-    public Playwright playCreate() {
+    public Playwright playwrightCreate() {
         tlPlaywright.set(Playwright.create());
         return getTlPlaywright();
     }
@@ -150,7 +77,6 @@ public class PlaywrightFactory {
     }
 
     public void contextStop(Method testInfo, ITestResult iTestResult) throws IOException, InterruptedException {
-        Thread.sleep(10000);
         String videoName = getTlPage().video().path().getFileName().toString();
         String logName = getLogName(testInfo);
         String tracePathStr = tracePath + logName + ".zip";
@@ -164,10 +90,11 @@ public class PlaywrightFactory {
         getTlContext().tracing().stop(new Tracing.StopOptions()
                 .setPath(zipFilePath));
 
+        Thread.sleep(10000);
         byte[] screenshot = getTlPage().screenshot(new Page.ScreenshotOptions()
                 .setPath(screenFilePath).setFullPage(true));
         getTlContext().close();
-        System.out.println("context closed");
+        Allure.addAttachment(">> context closed <<",".txt","");
 
 
         byte[] videoContents = Files.readAllBytes(videoFilePath);
@@ -200,7 +127,6 @@ public class PlaywrightFactory {
 
 
     }
-
 
     private Path getPath(String customPath) {
         return Paths.get(customPath);

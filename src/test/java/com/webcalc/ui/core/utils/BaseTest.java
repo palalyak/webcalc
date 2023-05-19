@@ -3,7 +3,6 @@ package com.webcalc.ui.core.utils;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Playwright;
-import com.webcalc.api.core.RestService;
 import com.webcalc.api.core.RestWrapper;
 import com.webcalc.ui.core.PlaywrightFactory;
 import com.webcalc.ui.pages.WebCalc;
@@ -16,6 +15,8 @@ import org.testng.annotations.*;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+import static com.webcalc.ui.core.utils.AllureEnvironmentWriter.createEnvironmentPropertiesFile;
+
 public class BaseTest {
 
     private PlaywrightFactory pf;
@@ -27,33 +28,22 @@ public class BaseTest {
 
     protected RestWrapper api;
 
+    @BeforeSuite
+    public void setUpEnvironment() {
+        createEnvironmentPropertiesFile();
+    }
 
     @BeforeTest
     public void setFilter() {
         RestAssured.filters(new AllureRestAssured());
     }
 
-//    @BeforeSuite
-//    public void setUp() {
-//        pf = new PlaywrightFactory();
-//        page = pf.initBrowser();
-//        webCalc = new WebCalc(page);
-//        webCalc.closePopup();
-////        api = RestWrapper.loginAs(permissionLevel);
-//
-//    }
-//
-//    @AfterSuite
-//    public void tearDown(Method testInfo, ITestResult iTestResult) throws IOException {
-//        pf.stop(testInfo, iTestResult);
-//
-//    }
 
     @BeforeClass
     public void launchBrowser() {
         api = RestWrapper.request();
         pf = new PlaywrightFactory();
-        playwright = pf.playCreate();
+        playwright = pf.playwrightCreate();
         browser = pf.startBrowser();
         context = pf.startContext();
     }
