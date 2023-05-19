@@ -30,9 +30,11 @@ public class PlaywrightFactory {
     public static Playwright getTlPlaywright() {
         return tlPlaywright.get();
     }
+
     public static Browser getTlBrowser() {
         return tlBrowser.get();
     }
+
     public static BrowserContext getTlContext() {
         return tlContext.get();
     }
@@ -76,7 +78,7 @@ public class PlaywrightFactory {
         return getTlPage();
     }
 
-    public void contextStop(Method testInfo, ITestResult iTestResult) throws IOException, InterruptedException {
+    public void contextStop(Method testInfo) throws IOException, InterruptedException {
         String videoName = getTlPage().video().path().getFileName().toString();
         String logName = getLogName(testInfo);
         String tracePathStr = tracePath + logName + ".zip";
@@ -94,26 +96,25 @@ public class PlaywrightFactory {
         byte[] screenshot = getTlPage().screenshot(new Page.ScreenshotOptions()
                 .setPath(screenFilePath).setFullPage(true));
         getTlContext().close();
-        Allure.addAttachment(">> context closed <<",".txt","");
+        Allure.addAttachment(">> context closed <<", ".txt", "");
 
 
         byte[] videoContents = Files.readAllBytes(videoFilePath);
         byte[] zipContents = Files.readAllBytes(zipFilePath);
         byte[] networkContents = Files.readAllBytes(networkFilePath);
 
-        if (iTestResult.getStatus() == 2) {
-            Allure.addAttachment("SCREENSHOT_" + logName,
-                    new ByteArrayInputStream(screenshot));
+        Allure.addAttachment("SCREENSHOT_" + logName,
+                new ByteArrayInputStream(screenshot));
 
-            Allure.addAttachment("TRACE_" + logName,
-                    new ByteArrayInputStream(zipContents));
+        Allure.addAttachment("TRACE_" + logName,
+                new ByteArrayInputStream(zipContents));
 
-            Allure.addAttachment("NETWORK_" + logName,
-                    new ByteArrayInputStream(networkContents));
+        Allure.addAttachment("NETWORK_" + logName,
+                new ByteArrayInputStream(networkContents));
 
-            Allure.addAttachment("VIDEO_" + logName,
-                    new ByteArrayInputStream(videoContents));
-        }
+        Allure.addAttachment("VIDEO_" + logName,
+                new ByteArrayInputStream(videoContents));
+
     }
 
     private String getLogName(Method testInfo) {

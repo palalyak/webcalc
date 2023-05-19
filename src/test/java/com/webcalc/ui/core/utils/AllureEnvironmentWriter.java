@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class AllureEnvironmentWriter {
-    private static final String ALLURE_RESULTS_PATH = "allure-results/";
+    private static final String ALLURE_RESULTS_PATH = "target/allure-results/";
     private static final String ALLURE_ENV_PROP_PATH = "allure-results/environment.properties";
 
     public static void createEnvironmentPropertiesFile() {
