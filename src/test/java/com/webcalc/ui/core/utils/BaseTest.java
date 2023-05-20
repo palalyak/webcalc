@@ -2,19 +2,15 @@ package com.webcalc.ui.core.utils;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
+import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.webcalc.api.core.RestWrapper;
 import com.webcalc.ui.core.PlaywrightFactory;
 import com.webcalc.ui.pages.WebCalcPage;
-import com.microsoft.playwright.Page;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
-import org.testng.ITestResult;
 import org.testng.annotations.*;
-
 import java.io.IOException;
-import java.lang.reflect.Method;
-
 import static com.webcalc.ui.core.utils.AllureEnvironmentWriter.createEnvironmentPropertiesFile;
 
 public class BaseTest {
@@ -25,7 +21,6 @@ public class BaseTest {
     private BrowserContext context;
     private Browser browser;
     protected WebCalcPage webCalcPage;
-
     protected RestWrapper api;
 
     @BeforeSuite
@@ -40,7 +35,7 @@ public class BaseTest {
 
 
     @BeforeClass
-    public void launchBrowser() {
+    public void startPlaywright() {
         api = RestWrapper.request();
         pf = new PlaywrightFactory();
         playwright = pf.playwrightCreate();
@@ -56,10 +51,9 @@ public class BaseTest {
     }
 
     @AfterClass
-    public void closeBrowser(Method testInfo) throws IOException, InterruptedException {
-        pf.contextStop(testInfo);
+    public void closeBrowser() throws IOException, InterruptedException {
+        pf.contextStop();
         pf.playwrightStop();
     }
-
 
 }

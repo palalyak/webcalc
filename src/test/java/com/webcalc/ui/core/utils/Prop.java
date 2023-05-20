@@ -7,6 +7,8 @@ import org.aeonbits.owner.Config;
 @Config.Sources({"file:./src/test/resources/config.properties", "system:env"})
 public interface Prop extends Config {
 
+    @Key("browser.name")
+    String browser();
     @Key("headless.browser.mode")
     Boolean mode();
     @Key("slow.motion")
