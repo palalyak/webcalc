@@ -1,11 +1,14 @@
 package com.webcalc.ui.tests;
+
 import com.webcalc.performance.RestAssuredThread;
 import com.webcalc.ui.core.utils.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import org.testng.annotations.Test;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.testng.AssertJUnit.assertEquals;
 
 @Epic("Performance")

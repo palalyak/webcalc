@@ -1,5 +1,4 @@
 package com.webcalc.ui.core.keyoptions;
-
 import lombok.Getter;
 
 public enum BtnCalc {

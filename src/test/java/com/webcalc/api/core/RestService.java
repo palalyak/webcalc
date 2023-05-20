@@ -11,6 +11,7 @@ import static io.restassured.config.EncoderConfig.encoderConfig;
 public abstract class RestService {
     public final String BASE_URL = getProp().baseURL();
     private RequestSpecification REQ_SPEC_ENCODED;
+
     protected abstract String getBasePath();
 
     public RequestSpecification getREQ_SPEC_ENCODED() {

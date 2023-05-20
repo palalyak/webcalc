@@ -30,7 +30,6 @@ jobs:
       - name: Run tests
         run: |
           mvn test -Dwebdriver.chrome.driver=/usr/bin/chromedriver
-            -Dwebdriver.chrome.options="--headless --no-sandbox --disable-dev-shm-usage"
       - name: Get Allure history
         uses: actions/checkout@v2
         if: always()

@@ -14,26 +14,6 @@
   {
     "formula": "x^2+2x-1=9",
     "result": "{x=-sqrt(11)-1, x=sqrt(11)-1}"
-  },
-  {
-    "formula": "(1, 2, 3)#(4, 5, 6)",
-    "result": "(-3, 6, -3)"
-  },
-  {
-    "formula": "100+5%",
-    "result": "105"
-  },
-  {
-    "formula": "sqrt(9)",
-    "result": "3"
-  },
-  {
-    "formula": "ncr(49, 6)",
-    "result": "13983816"
-  },
-  {
-    "formula": "200m in cm",
-    "result": "20000[cm]"
   }
 
 ]

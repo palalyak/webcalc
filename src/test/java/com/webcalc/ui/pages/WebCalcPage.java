@@ -1,16 +1,17 @@
 package com.webcalc.ui.pages;
 
-import com.webcalc.ui.core.keyoptions.BtnCalc;
-import com.webcalc.ui.core.utils.BasePage;
-import com.webcalc.ui.core.keyoptions.CalcTypes;
 import com.microsoft.playwright.Page;
+import com.webcalc.ui.core.keyoptions.BtnCalc;
+import com.webcalc.ui.core.keyoptions.CalcTypes;
+import com.webcalc.ui.core.utils.BasePage;
 import io.qameta.allure.Step;
-import lombok.extern.log4j.Log4j2;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import static org.assertj.core.api.Assertions.assertThat;
+
 import static io.qameta.allure.Allure.step;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class WebCalcPage extends BasePage {

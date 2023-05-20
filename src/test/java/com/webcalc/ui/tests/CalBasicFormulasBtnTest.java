@@ -8,11 +8,9 @@ import io.qameta.allure.Feature;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
 import java.util.Arrays;
-
 import static com.webcalc.ui.core.keyoptions.BtnCalc.*;
-import static com.webcalc.ui.core.keyoptions.CalcTypes.*;
+import static com.webcalc.ui.core.keyoptions.CalcTypes.Scientific;
 import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -115,6 +113,18 @@ public class CalBasicFormulasBtnTest extends BaseTest {
             });
         });
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Test(dataProvider = "getData")
     @Description("calc types")

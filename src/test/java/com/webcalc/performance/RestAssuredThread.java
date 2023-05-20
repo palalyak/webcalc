@@ -44,7 +44,7 @@ public class RestAssuredThread extends Thread {
         ValidatableResponse response = given().baseUri(getProp().baseURL()).basePath("calc").log().all()
                 .body(requestBody).post().then();
 
-        if(response.extract().statusCode() != 200)
+        if (response.extract().statusCode() != 200)
             failures++;
         times.put(threadNumber, response.extract().time());
     }

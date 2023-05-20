@@ -7,7 +7,7 @@ import java.io.OutputStream;
 
 public class AllureEnvironmentWriter {
     private static final String ALLURE_RESULTS_PATH = "target/allure-results/";
-    private static final String ALLURE_ENV_PROP_PATH = "allure-results/environment.properties";
+    private static final String ALLURE_ENV_PROP_PATH = "target/allure-results/environment.properties";
 
     public static void createEnvironmentPropertiesFile() {
         Properties properties = new Properties();
