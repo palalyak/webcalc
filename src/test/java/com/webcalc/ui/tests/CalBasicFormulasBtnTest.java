@@ -14,7 +14,7 @@ import static com.webcalc.ui.core.keyoptions.CalcTypes.Scientific;
 import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Epic("Web calculator UI / Basic math operations")
+@Epic("UI Basic math operations")
 @Feature("Click calc buttons")
 @Listeners(com.lista.automation.api.TestListener.class)
 public class CalBasicFormulasBtnTest extends BaseTest {

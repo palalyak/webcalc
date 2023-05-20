@@ -16,7 +16,7 @@ public class AllureEnvironmentWriter {
 
         try (OutputStream outputStream = new FileOutputStream(ALLURE_ENV_PROP_PATH)) {
             properties.setProperty("Browser", "Chrome");
-            properties.setProperty("Browser Version", "101");
+            properties.setProperty("Browser Version", "Version 113.0.5672.127 (Official Build) (64-bit)");
             properties.setProperty("OS", System.getProperty("os.name"));
             properties.store(outputStream, null);
         } catch (IOException e) {
