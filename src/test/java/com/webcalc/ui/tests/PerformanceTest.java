@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.testng.AssertJUnit.assertEquals;
 
-@Epic("Performance API tests")
+@Epic("Performance API test")
 @Feature("send api requests")
 public class PerformanceTest extends BaseTest {
 
