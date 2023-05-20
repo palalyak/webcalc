@@ -1,13 +1,11 @@
 package com.webcalc.ui.core;
 
-import com.webcalc.ui.core.utils.Properties;
 import com.microsoft.playwright.*;
+import com.webcalc.ui.core.utils.Properties;
 import io.qameta.allure.Allure;
-import org.testng.ITestResult;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -72,15 +70,16 @@ public class PlaywrightFactory {
         return getTlContext();
     }
 
+
     public Page startPage() {
         tlPage.set(getTlContext().newPage());
         getTlPage().navigate(Properties.getProp().baseURL());
         return getTlPage();
     }
 
-    public void contextStop(Method testInfo) throws IOException, InterruptedException {
+    public void contextStop() throws IOException, InterruptedException {
         String videoName = getTlPage().video().path().getFileName().toString();
-        String logName = getLogName(testInfo);
+        String logName = getLogName();
         String tracePathStr = tracePath + logName + ".zip";
         String screenPathStr = screenPath + logName + ".png";
         Path zipFilePath = getPath(tracePathStr);
@@ -117,9 +116,9 @@ public class PlaywrightFactory {
 
     }
 
-    private String getLogName(Method testInfo) {
+    private String getLogName() {
         String formattedDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Properties.getProp().dateTimePattern()));
-        return String.format("%s_%s", formattedDateTime, testInfo.getName());
+        return String.format("%s_%s", formattedDateTime, "");
     }
 
     public void playwrightStop() {
