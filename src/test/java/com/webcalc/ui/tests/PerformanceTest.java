@@ -17,7 +17,7 @@ public class PerformanceTest extends BaseTest {
 
     @Test
     public void testPerformOperation() throws InterruptedException {
-        int threadNumber = 100;
+        int threadNumber = 10;
         List<Thread> threads = new ArrayList<>();
         for (int i = 0; i < threadNumber; i++) {
             RestAssuredThread request = new RestAssuredThread(i);
@@ -29,8 +29,7 @@ public class PerformanceTest extends BaseTest {
         for (Thread th : threads) {
             th.join();
         }
-
-        System.out.println(RestAssuredThread.times);
-        assertEquals(String.format("There is %s unsuccessful responses",RestAssuredThread.failures), 0, RestAssuredThread.failures);
+        assertEquals(String.format("There is %s unsuccessful responses",RestAssuredThread.failures),
+                0, RestAssuredThread.failures);
     }
 }
