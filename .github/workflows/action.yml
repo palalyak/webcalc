@@ -6,11 +6,10 @@ on:
   pull_request:
     branches: [ "master" ]
   schedule:
-      - cron: '0 14 * * 1'
+    - cron: '0 14 * * 1'
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -23,9 +22,15 @@ jobs:
         run: mvn -B install -D skipTests --no-transfer-progress
       - name: Install Playwright
         run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
+      - name: Set up Chrome
+        run: |
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome-stable_current_amd64.deb
+          sudo apt-get install -f
       - name: Run tests
-        run: mvn test
-
+        run: |
+          mvn test -Dwebdriver.chrome.driver=/usr/bin/chromedriver
+            -Dwebdriver.chrome.options="--headless --no-sandbox --disable-dev-shm-usage"
       - name: Get Allure history
         uses: actions/checkout@v2
         if: always()
@@ -52,5 +57,3 @@ jobs:
           PERSONAL_TOKEN: ${{ secrets.WEBCALC }}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
-
-
