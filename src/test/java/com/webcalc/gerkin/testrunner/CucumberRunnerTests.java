@@ -5,12 +5,11 @@ import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
         features = {"src/test/resources/appfeatures"},
-        glue = {"stepdefinitions", "AppHooks"},
+        glue = {"com.webcalc.gerkin.stepdefinitions", "com.webcalc.gerkin.hooks"},
         tags = "@Regression",
         plugin = {"pretty",
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
-                "html:target/cucumber-report/cucumber.xml"},
-        dryRun = true
+                "html:target/cucumber-report/cucumber.xml"}
 
 )
 public class CucumberRunnerTests extends AbstractTestNGCucumberTests {

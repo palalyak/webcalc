@@ -114,18 +114,6 @@ public class CalBasicFormulasBtnTest extends BaseTest {
         });
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     @Test(dataProvider = "getData")
     @Description("calc types")
     public void testCalculatorTypes(CalcTypes calcType) {

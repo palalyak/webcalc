@@ -1,4 +1,6 @@
 @All
+@TestNG
+@severity=blocker
 Feature: Cucumber UI/API tests for web calculator
 
   @Smoke @qa-ready @Epic-900
